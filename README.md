@@ -4,7 +4,7 @@ FastAPI fundamentals lab - Educational project to learn the basics of FastAPI.
 
 ## 📋 Description
 
-This project is a practical lab that demonstrates the fundamental concepts of FastAPI, including RESTful endpoint creation, data validation with Pydantic models, and automatic documentation.
+This project is a practical lab that demonstrates the fundamental concepts of FastAPI, including RESTful endpoint creation, data validation with Pydantic models, and automatic documentation. The project follows a modular architecture using FastAPI's `APIRouter` to organize endpoints by resource (users, auth, etc.), making it scalable and maintainable.
 
 ## 🚀 Requirements
 
@@ -63,11 +63,44 @@ FastAPI automatically generates interactive documentation. Once the server is ru
 ## 🏗️ Project Structure
 
 ```
-lab_fastapi/
-├── main.py              # FastAPI main application
-├── schemas.py           # Pydantic models
-├── requirements.txt     # Project dependencies
-└── README.md           # This file
+lab_fastApi/
+├── main.py                  # FastAPI main application
+├── requirements.txt         # Project dependencies
+├── README.md               # This file
+├── routes/                 # API route modules
+│   ├── __init__.py
+│   ├── users.py            # User endpoints router
+│   └── auth.py             # Authentication endpoints router (in development)
+└── schemas/                # Pydantic data models
+    ├── __init__.py
+    └── schemas.py          # User and UserPatch models
+```
+
+## 📡 API Endpoints
+
+### Users Endpoints (`/api/v1/users`)
+
+- `GET /api/v1/users/all-users` - Get all users
+- `POST /api/v1/users/user` - Create a new user
+- `PUT /api/v1/users/user/{id}` - Update a user (full update)
+- `PATCH /api/v1/users/user/{id}` - Update a user (partial update)
+- `DELETE /api/v1/users/user/{id}` - Delete a user
+- `POST /api/v1/users/welcome/{name}` - Greet with path parameter
+- `POST /api/v1/users/welcome-default` - Greet with optional parameter
+- `POST /api/v1/users/welcome-body` - Greet with request body
+
+### Root Endpoint
+
+- `GET /` - Root endpoint returning "Hello World"
+
+## 🏛️ Architecture
+
+The project uses a modular architecture with FastAPI routers:
+
+- **Routers**: Each resource (users, auth) has its own router file in the `routes/` directory
+- **Schemas**: Data models are defined in the `schemas/` directory using Pydantic
+- **Main App**: The main FastAPI application (`main.py`) includes all routers with their respective prefixes and tags
+
 ```
 
 ## 🛠️ Technologies Used
