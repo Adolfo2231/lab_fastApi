@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from routes.users import users_router
+from routes.auth import auth_router
 
 """FastAPI fundamentals lab - Educational project to learn the basics of FastAPI."""
 
@@ -13,3 +14,4 @@ def read_root():
 
 # Include routers with their prefixes
 app.include_router(users_router, prefix="/api/v1/users", tags=["users"])
+app.include_router(auth_router, prefix="/api/v1/auth", tags=["authentication"])
