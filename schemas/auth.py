@@ -1,30 +1,28 @@
-from fastapi.security import OAuth2PasswordBearer #? For OAuth2 authentication
 from pydantic import BaseModel, Field
-from schemas.users import User
-"""Schemas for authentication"""
 
-"""OAuth2 scheme for authentication"""
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login") #? For OAuth2 authentication
+"""Schemas for authentication"""
 
 # Login model
 class Login(BaseModel):
     """Login model - only includes email and password"""
-    email: str = Field(..., min_length=3, max_length=50)
+    username: str = Field(..., min_length=3, max_length=50)
     password: str = Field(..., min_length=3, max_length=50)
 
 class LoginResponse(BaseModel):
     """Response model for login - only includes token"""
-    token: str = Field(..., min_length=3, max_length=50)
+    access_token: str = Field(..., description="JWT access token")
+    token_type: str = Field(default="bearer", description="Token type")
+    access_token_expires_minutes: int = Field(..., description="Token expiration time in minutes")
+    refresh_token: str = Field(..., description="JWT refresh token")
+    refresh_token_expires_days: int = Field(..., description="Refresh token expiration time in days")
 
 class Register(BaseModel):
     """Register model - only includes public user data"""
     email: str = Field(..., min_length=3, max_length=50)
+    username: str = Field(..., min_length=3, max_length=50)
     password: str = Field(..., min_length=3, max_length=50)
-    name: str = Field(..., min_length=3, max_length=50)
-    last_name: str = Field(..., min_length=3, max_length=50)
 
 class RegisterResponse(BaseModel):
     """Response model for registration - only includes public user data"""
     email: str
-    name: str
-    last_name: str
+    username: str

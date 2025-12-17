@@ -1,36 +1,24 @@
 from schemas.auth import Register, RegisterResponse
+from utils.jwt import create_access_token, create_refresh_token
+from utils.jwt import ACCESS_TOKEN_EXPIRE_MINUTES, REFRESH_TOKEN_EXPIRE_DAYS
 
 class AuthService:
     """Service layer for authentication business logic"""
     
     @staticmethod
     def register_user(register_data: Register) -> RegisterResponse:
-        """
-        Register a new user
-        
-        Args:
-            register_data: Register model with user data including password
-            
-        Returns:
-            RegisterResponse: User data without password
-        """
-        # Aquí iría la lógica de negocio:
-        # - Validar que el email no exista
-        # - Hashear la contraseña
-        # - Guardar en base de datos
-        # - Enviar email de confirmación
-        # etc.
-        
-        # Guardar en BD y obtener el usuario
-        # user = save_to_database(register_data)
-        # user_dict = user.to_dict()  # Retorna dict SIN password (tu modelo nunca lo incluye)
-        
-        # Simulación del dict que retornaría user.to_dict()
+        """Register a new user"""
         user_dict = {
             "email": register_data.email,
-            "name": register_data.name,
-            "password": register_data.password,
-            "last_name": register_data.last_name
-            # password NO está aquí porque tu modelo nunca lo devuelve
+            "username": register_data.username,
         }
         return user_dict
+ 
+    @staticmethod
+    def login_user(login_data: dict) -> dict:
+        """Login a user"""
+        # OAuth2 envía 'username', lo usamos directamente
+        user = login_data.get("username")
+        access_token = create_access_token({"sub": user})
+        refresh_token = create_refresh_token({"sub": user})
+        return {"access_token": access_token, "refresh_token": refresh_token, "token_type": "bearer", "access_token_expires_minutes": ACCESS_TOKEN_EXPIRE_MINUTES, "refresh_token_expires_days": REFRESH_TOKEN_EXPIRE_DAYS}
