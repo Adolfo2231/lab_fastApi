@@ -78,10 +78,8 @@ lab_fastApi/
 ├── services/               # Business logic layer
 │   └── auth_service.py     # Authentication service
 ├── utils/                  # Utility functions
-│   ├── jwt.py              # JWT token creation and verification
-│   └── role_verification.py # Role-based access control utilities
-└── docs/                   # Documentation
-    └── JWT_NOTES.md        # JWT documentation and notes
+    ├── jwt.py              # JWT token creation and verification
+    └── role_verification.py # Role-based access control utilities
 ```
 
 ## 📡 API Endpoints
